@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h1 class="text-3xl font-bold mb-4">Welcome to My Blog</h1>
+        <p>Explore the latest posts and articles.</p>
+        <a href={% url 'post_list' %}>Postlarni ko'rish</a>
+    </div>
+{% endblock %}
