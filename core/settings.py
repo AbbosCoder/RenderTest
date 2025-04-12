@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import environ
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
@@ -26,19 +26,21 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*','blog.abbostech.uz']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pages'
+    'tailwind',
+    'pages',
 ]
 
 MIDDLEWARE = [
@@ -74,11 +76,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-import os, dj_database_url
-
-
 DATABASES = {
-    'default': dj_database_url.parse(env('DATABASE_URL'))
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
+    }
 }
 
 
@@ -100,6 +102,34 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+JAZZMIN_SETTINGS = {
+    "site_title": "Mening Admin Panelim",  # Brauzer ichida chiqadigan sarlavha
+    "site_header": "Admin Panel",  # Saytning yuqori qismi
+    "site_brand": "Mening Saytim",  # Chap yuqoridagi brend nomi
+    "welcome_sign": "Xush kelibsiz, Admin!",  # Kirish sahifasida ko‘rinadigan matn
+    "copyright": "© 2024 Abbosbek. Barcha huquqlar himoyalangan",  # Sayt pastki qismi
+
+    # Navbar va footer sozlamalari
+    "show_ui_builder": False,  # UI Builder tugmasini o‘chirish
+    "user_avatar": None,  # Foydalanuvchi profil rasmi
+    "topmenu_links": [
+        {"name": "Bosh sahifa", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"model": "auth.User"},  # Admin panelda Users modelini ko‘rsatish
+    ],
+    
+    # Yon menyuni sozlash
+    "navigation_expanded": True,  # Yon panel avtomatik ochiq turadi
+    "hide_apps": [],  # Agar kerak bo‘lsa, ayrim ilovalarni yashirish mumkin
+    "hide_models": [],  # Yashiriladigan modellarni qo‘shish mumkin
+
+    # Foydalanuvchi profili sahifasini ko‘rsatish
+    "custom_links": {
+        "auth": [{"name": "Yangi foydalanuvchi qo‘shish", "url": "admin:auth_user_add", "icon": "fas fa-user-plus"}]
+    },
+
+    # Templateni tanlash
+    "changeform_format": "horizontal_tabs",  # Formalarni ko‘rinishini o‘zgartirish
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -117,17 +147,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 
-# Directory to collect static files during deployment
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Additional locations for static files
+# Frontend static fayllar uchun papka
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static'),  # Bu papka loyihaning ichida bo‘lishi kerak
 ]
 
+# Static fayllarni yig‘ish uchun papka (deploy uchun)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
+# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-fieldc
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
