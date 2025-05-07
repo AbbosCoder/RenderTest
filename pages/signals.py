@@ -5,8 +5,8 @@ from .models import ContactMessage
 from .utils import send_telegram_message  # Telegram uchun yuborish funksiyasini import qilish
 
 # Telegram bot tokeni va admin chat ID
-BOT_TOKEN = '7811597017:AAFjXgBZwsV_taaXHfaBr7EDJXIefWKsPzk'
-ADMIN_CHAT_ID = '762725479'
+BOT_TOKEN = '78115912:AAFjXgBZwsV_taaXHfaBr7EDJXIefWKsPzk'
+ADMIN_CHAT_ID = '76272541279'
 
 @receiver(post_save, sender=ContactMessage)
 def send_message_to_telegram(sender, instance, created, **kwargs):

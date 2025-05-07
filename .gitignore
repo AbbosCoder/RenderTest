@@ -2,3 +2,15 @@ __pycache__
 .env
 venv
 db.sqlite3
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.log
+*.pot
+*.mo
+*.egg-info
+*.egg
+*.zip
+*.tar.gz
